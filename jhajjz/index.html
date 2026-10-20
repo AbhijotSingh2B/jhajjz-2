@@ -108,14 +108,27 @@ p { margin: 0; }
 .occasions button:hover { color: var(--ink); background: #27231c; }
 .occasions button[aria-pressed="true"] { background: var(--ink); color: var(--paper-ink); }
 
-.porch { position: relative; margin-top: clamp(16px, 2vw, 32px); }
+.porch { position: relative; margin-top: clamp(8px, 1.5vw, 24px); overflow: hidden; }
+.marque {
+  position: absolute; left: 50%; top: 2%; transform: translateX(-50%);
+  white-space: nowrap; pointer-events: none; user-select: none;
+  font-size: clamp(110px, 19vw, 330px); font-weight: 500; letter-spacing: -0.06em; line-height: 0.8;
+  color: var(--surface);
+  transition: opacity 260ms var(--ease), transform 600ms var(--ease);
+}
+.marque.swap { opacity: 0; transform: translateX(-50%) translateY(14px); }
+.porch::after {
+  content: ""; position: absolute; left: 50%; bottom: 4%; width: 62vw; height: 22%; transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(255, 236, 200, 0.16), rgba(255, 236, 200, 0)); /* taste-skill-ignore: the porch light pool under the car */
+  pointer-events: none;
+}
 .floor {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 30%;
+  position: absolute; left: 0; right: 0; bottom: 0; height: 30%; z-index: 0;
   background: var(--floor);
 }
 .arc {
   --w: 22vw;
-  position: relative;
+  position: relative; z-index: 1;
   display: flex; align-items: flex-end;
   overflow-x: auto; overflow-y: hidden;
   scroll-snap-type: x mandatory;
@@ -160,8 +173,19 @@ p { margin: 0; }
 .plate-name h2, .plate-name p { transition: opacity 180ms var(--ease); }
 .plate-name.swap h2, .plate-name.swap p { opacity: 0; }
 
+/* ---------- Cities: one red field ---------- */
+.cities { background: var(--accent); color: var(--accent-ink); padding-block: clamp(40px, 5vw, 72px); margin-top: clamp(48px, 5vw, 88px); overflow: hidden; }
+.cities-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px 32px; flex-wrap: wrap; }
+.cities-head h2 { font-size: var(--s-lead); font-weight: 500; letter-spacing: -0.02em; }
+.cities-head p { font-size: var(--s-body); }
+.ticker { display: flex; width: max-content; margin-top: clamp(20px, 2.5vw, 36px); animation: ticker 60s linear infinite; }
+.ticker-line { font-size: var(--s-big); font-weight: 300; letter-spacing: -0.04em; line-height: 1; white-space: nowrap; padding-right: 0.6em; }
+.ticker-line span { color: rgba(255, 255, 255, 0.62); }
+@keyframes ticker { to { transform: translateX(-50%); } }
+.cities:hover .ticker { animation-play-state: paused; }
+
 /* ---------- Occasions: cards crossing a held photograph ---------- */
-.occasion-run { position: relative; height: 240svh; margin-top: var(--section); }
+.occasion-run { position: relative; height: 240svh; }
 .stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
 .stage-photo { position: absolute; inset: 0; }
 .stage-photo img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.42) saturate(0.85); transform: scale(var(--zoom, 1.06)); }
@@ -300,6 +324,9 @@ p { margin: 0; }
   html { scroll-behavior: auto; }
   .js .rise, .js .wipe img { opacity: 1; transform: none; clip-path: none; transition: none; }
   .car img, .contact-photo img, .stage-photo img { transition: none; transform: none; }
+  .ticker { animation: none; width: auto; }
+  .ticker-line { white-space: normal; font-size: var(--s-head); }
+  .ticker-line[aria-hidden] { display: none; }
 }
 
 /* ---------- Tablet ---------- */
@@ -322,6 +349,8 @@ p { margin: 0; }
 @media (max-width: 640px) {
   .bar .button { min-height: 44px; padding: 0 1em; }
   .bar .button span.long { display: none; }
+  .marque { font-size: 30vw; top: 6%; }
+  .porch::after { width: 90vw; }
   .hero-copy { grid-template-columns: 1fr; gap: 16px; }
   .hero h1 { font-size: 11vw; }
   .hero-sub { justify-self: start; font-size: var(--s-body); }
@@ -405,20 +434,21 @@ p { margin: 0; }
 
     <div class="porch">
       <div class="floor" aria-hidden="true"></div>
+      <p class="marque" id="marque" aria-hidden="true">Ghost</p>
       <div class="arc" id="arc" tabindex="0" role="listbox" aria-label="The Jhajj'z fleet. Drag or use the arrow keys.">
-        <button class="car" role="option" data-id="red-audi-a3-cabriolet" data-name="Audi A3 Cabriolet" data-fact="Roof down for the photoshoot." data-occ="Weddings"><img draggable="false" src="assets/cars/red-audi-a3-cabriolet.webp" alt="Red Audi A3 Cabriolet with the roof down" width="561" height="233"></button>
-        <button class="car" role="option" data-id="black-mercedes-amg-g-63" data-name="Mercedes-AMG G 63" data-fact="For an entrance people will photograph." data-occ="Weddings"><img draggable="false" src="assets/cars/black-mercedes-amg-g-63.webp" alt="Black Mercedes-AMG G 63" width="984" height="541"></button>
-        <button class="car" role="option" data-id="red-mercedes-maybach-gls" data-name="Mercedes-Maybach GLS" data-fact="A luxury SUV for the couple or the family." data-occ="Weddings"><img draggable="false" src="assets/cars/red-mercedes-maybach-gls.webp" alt="Red Mercedes-Maybach GLS" width="1069" height="516"></button>
-        <button class="car" role="option" data-id="silver-rolls-royce-ghost" data-name="Rolls-Royce Ghost" data-fact="The wedding car. Flowers and ribbon on request." data-occ="Weddings"><img draggable="false" src="assets/cars/silver-rolls-royce-ghost.webp" alt="Silver Rolls-Royce Ghost" width="546" height="250"></button>
-        <button class="car" role="option" data-id="black-mercedes-benz-s-class" data-name="Mercedes-Benz S-Class" data-fact="For delegations, dignitaries and the drive home." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/black-mercedes-benz-s-class.webp" alt="Black Mercedes-Benz S-Class" width="754" height="315"></button>
-        <button class="car" role="option" data-id="white-bmw-7-series" data-name="BMW 7 Series" data-fact="Hotel desks and VIP convoys, with a Jhajj'z chauffeur." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/white-bmw-7-series.webp" alt="White BMW 7 Series" width="1031" height="369"></button>
-        <button class="car" role="option" data-id="white-jaguar-xj" data-name="Jaguar XJ" data-fact="A quiet saloon for meetings and receptions." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/white-jaguar-xj.webp" alt="White Jaguar XJ" width="938" height="470"></button>
-        <button class="car" role="option" data-id="white-mercedes-benz-e-class" data-name="Mercedes-Benz E-Class" data-fact="The executive cab for meetings and airport runs." data-occ="Airport &amp; crew"><img draggable="false" src="assets/cars/white-mercedes-benz-e-class.webp" alt="White Mercedes-Benz E-Class" width="1109" height="428"></button>
-        <button class="car" role="option" data-id="white-range-rover" data-name="Range Rover" data-fact="The SUV for the hills, the farmhouse and the baraat." data-occ="Weddings"><img draggable="false" src="assets/cars/white-range-rover.webp" alt="White Range Rover" width="1012" height="388"></button>
-        <button class="car" role="option" data-id="white-toyota-land-cruiser" data-name="Toyota Land Cruiser" data-fact="Long drives and convoys, in comfort." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/white-toyota-land-cruiser.webp" alt="White Toyota Land Cruiser" width="951" height="501"></button>
-        <button class="car" role="option" data-id="white-toyota-vellfire" data-name="Toyota Vellfire" data-fact="A luxury MPV for families and guests." data-occ="Groups"><img draggable="false" src="assets/cars/white-toyota-vellfire.webp" alt="White Toyota Vellfire" width="959" height="483"></button>
-        <button class="car" role="option" data-id="black-toyota-innova-crysta" data-name="Toyota Innova Crysta" data-fact="Airline crew, airport transfers and staff commutes." data-occ="Airport &amp; crew"><img draggable="false" src="assets/cars/black-toyota-innova-crysta.webp" alt="Black Toyota Innova Crysta" width="894" height="534"></button>
-        <button class="car" role="option" data-id="grey-force-urbania" data-name="Force Urbania" data-fact="A mini van for the family or the team. Coaches for the rest." data-occ="Groups"><img draggable="false" src="assets/cars/grey-force-urbania.webp" alt="Grey Force Urbania" width="548" height="406"></button>
+        <button class="car" role="option" data-id="red-audi-a3-cabriolet" data-word="Cabriolet" data-name="Audi A3 Cabriolet" data-fact="Roof down for the photoshoot." data-occ="Weddings"><img draggable="false" src="assets/cars/red-audi-a3-cabriolet.webp" alt="Red Audi A3 Cabriolet with the roof down" width="561" height="233"></button>
+        <button class="car" role="option" data-id="black-mercedes-amg-g-63" data-word="G 63" data-name="Mercedes-AMG G 63" data-fact="For an entrance people will photograph." data-occ="Weddings"><img draggable="false" src="assets/cars/black-mercedes-amg-g-63.webp" alt="Black Mercedes-AMG G 63" width="984" height="541"></button>
+        <button class="car" role="option" data-id="red-mercedes-maybach-gls" data-word="Maybach" data-name="Mercedes-Maybach GLS" data-fact="A luxury SUV for the couple or the family." data-occ="Weddings"><img draggable="false" src="assets/cars/red-mercedes-maybach-gls.webp" alt="Red Mercedes-Maybach GLS" width="1069" height="516"></button>
+        <button class="car" role="option" data-id="silver-rolls-royce-ghost" data-word="Ghost" data-name="Rolls-Royce Ghost" data-fact="The wedding car. Flowers and ribbon on request." data-occ="Weddings"><img draggable="false" src="assets/cars/silver-rolls-royce-ghost.webp" alt="Silver Rolls-Royce Ghost" width="546" height="250"></button>
+        <button class="car" role="option" data-id="black-mercedes-benz-s-class" data-word="S-Class" data-name="Mercedes-Benz S-Class" data-fact="For delegations, dignitaries and the drive home." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/black-mercedes-benz-s-class.webp" alt="Black Mercedes-Benz S-Class" width="754" height="315"></button>
+        <button class="car" role="option" data-id="white-bmw-7-series" data-word="7 Series" data-name="BMW 7 Series" data-fact="Hotel desks and VIP convoys, with a Jhajj'z chauffeur." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/white-bmw-7-series.webp" alt="White BMW 7 Series" width="1031" height="369"></button>
+        <button class="car" role="option" data-id="white-jaguar-xj" data-word="XJ" data-name="Jaguar XJ" data-fact="A quiet saloon for meetings and receptions." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/white-jaguar-xj.webp" alt="White Jaguar XJ" width="938" height="470"></button>
+        <button class="car" role="option" data-id="white-mercedes-benz-e-class" data-word="E-Class" data-name="Mercedes-Benz E-Class" data-fact="The executive cab for meetings and airport runs." data-occ="Airport &amp; crew"><img draggable="false" src="assets/cars/white-mercedes-benz-e-class.webp" alt="White Mercedes-Benz E-Class" width="1109" height="428"></button>
+        <button class="car" role="option" data-id="white-range-rover" data-word="Range Rover" data-name="Range Rover" data-fact="The SUV for the hills, the farmhouse and the baraat." data-occ="Weddings"><img draggable="false" src="assets/cars/white-range-rover.webp" alt="White Range Rover" width="1012" height="388"></button>
+        <button class="car" role="option" data-id="white-toyota-land-cruiser" data-word="Cruiser" data-name="Toyota Land Cruiser" data-fact="Long drives and convoys, in comfort." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/white-toyota-land-cruiser.webp" alt="White Toyota Land Cruiser" width="951" height="501"></button>
+        <button class="car" role="option" data-id="white-toyota-vellfire" data-word="Vellfire" data-name="Toyota Vellfire" data-fact="A luxury MPV for families and guests." data-occ="Groups"><img draggable="false" src="assets/cars/white-toyota-vellfire.webp" alt="White Toyota Vellfire" width="959" height="483"></button>
+        <button class="car" role="option" data-id="black-toyota-innova-crysta" data-word="Crysta" data-name="Toyota Innova Crysta" data-fact="Airline crew, airport transfers and staff commutes." data-occ="Airport &amp; crew"><img draggable="false" src="assets/cars/black-toyota-innova-crysta.webp" alt="Black Toyota Innova Crysta" width="894" height="534"></button>
+        <button class="car" role="option" data-id="grey-force-urbania" data-word="Urbania" data-name="Force Urbania" data-fact="A mini van for the family or the team. Coaches for the rest." data-occ="Groups"><img draggable="false" src="assets/cars/grey-force-urbania.webp" alt="Grey Force Urbania" width="548" height="406"></button>
       </div>
     </div>
 
@@ -435,6 +465,11 @@ p { margin: 0; }
       </div>
       <p class="plate-ask">Drag the line-up to see the fleet.<br>Ask about this car on <a class="wa-link" href="https://wa.me/919803600001" target="_blank" rel="noopener">WhatsApp</a></p>
     </div>
+  </section>
+
+  <section class="cities" aria-labelledby="cities-title">
+    <div class="wrap cities-head"><h2 id="cities-title">Where we drive</h2><p>Chauffeurs and cars in 14 cities, from the Mohali yard.</p></div>
+    <div class="ticker"><p class="ticker-line">Chandigarh <span>New Delhi</span> Gurgaon <span>Jaipur</span> Udaipur <span>Mumbai</span> Chennai <span>Kolkata</span> Bhubaneswar <span>Dehradun</span> Mussoorie <span>Rishikesh</span> Haridwar <span>Ropar</span></p><p class="ticker-line" aria-hidden="true">Chandigarh <span>New Delhi</span> Gurgaon <span>Jaipur</span> Udaipur <span>Mumbai</span> Chennai <span>Kolkata</span> Bhubaneswar <span>Dehradun</span> Mussoorie <span>Rishikesh</span> Haridwar <span>Ropar</span></p></div>
   </section>
 
   <section class="occasion-run" id="occasions" aria-labelledby="occ-title">
@@ -616,6 +651,7 @@ p { margin: 0; }
   const nameEl = document.getElementById('car-name');
   const factEl = document.getElementById('car-fact');
   const plate = nameEl.parentElement;
+  const marque = document.getElementById('marque');
   const occBtns = [...document.querySelectorAll('.occasions button')];
   const waLinks = [...document.querySelectorAll('.wa-link')];
   let current = null, ticking = false, settleT;
@@ -646,10 +682,11 @@ p { margin: 0; }
     current = car;
     car.setAttribute('aria-selected', 'true');
     const name = car.dataset.name, fact = car.dataset.fact;
-    if (reduce) { nameEl.textContent = name; factEl.textContent = fact; }
+    const word = car.dataset.word || name;
+    if (reduce) { nameEl.textContent = name; factEl.textContent = fact; marque.textContent = word; }
     else {
-      plate.classList.add('swap');
-      setTimeout(() => { nameEl.textContent = name; factEl.textContent = fact; plate.classList.remove('swap'); }, 160);
+      plate.classList.add('swap'); marque.classList.add('swap');
+      setTimeout(() => { nameEl.textContent = name; factEl.textContent = fact; marque.textContent = word; plate.classList.remove('swap'); marque.classList.remove('swap'); }, 180);
     }
     const msg = encodeURIComponent(`Hello Jhajj'z, I'd like to ask about the ${name}. Date: , Pickup city: `);
     waLinks.forEach(a => a.href = `${WA}?text=${msg}`);
