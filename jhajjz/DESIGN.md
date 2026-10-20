@@ -109,6 +109,17 @@ Flat. No shadows on anything at rest. Depth comes from light: a warm porch-light
 
 Square corners everywhere: buttons, switches, photographs, the contact plate. No pills, no rounded cards, no outlines.
 
+## Motion
+
+GSAP (ScrollTrigger, SplitText) and Lenis, loaded from jsDelivr; no build step. Motion always runs, reduced-motion settings included (client decision). Studied from ZzStudio's client sites (Two26, Evermark, HOCL Labs).
+
+- **Arrival**: on load the porch floor spreads, the light pool fades up and the line-up comes out of the dark (about 2.4s); the h1 lines rise out of a mask.
+- **Wave headings**: section headings rise letter by letter out of a word mask, once, as they enter.
+- **Cities ribbon**: the red band hangs at -2.5deg; the ticker follows scroll direction, speeds up with scroll velocity and stops on hover, and the band tilts a little further with speed.
+- **Held photograph opens**: the occasions photograph widens from a framed plate to full bleed as the section arrives (desktop only).
+- **Ink fill**: the yard text fills word by word from dim to bone with scroll, and three real facts pop on as square sign-red tags. Tags only ever carry published facts.
+- Smooth scroll is Lenis on GSAP's ticker; in-page links scroll through Lenis to the section's page offset.
+
 ## Components
 
 - **Primary button**: flat sign-red rectangle, 52px tall, white label, WhatsApp glyph. One per screen at most. Its link carries a pre-filled message naming the car on the porch.
