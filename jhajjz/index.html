@@ -85,12 +85,12 @@ p { margin: 0; }
 /* ---------- Hero: the line-up on the porch ---------- */
 .hero { position: relative; padding-bottom: clamp(40px, 5vw, 72px); }
 .hero-copy {
-  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; gap: 24px 48px;
+  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: start; gap: 24px 48px;
   padding-top: clamp(16px, 2.4vw, 40px);
 }
-.hero h1 { font-size: var(--s-big); font-weight: 300; letter-spacing: -0.04em; line-height: 1; }
+.hero h1 { margin-top: -0.08em; font-size: var(--s-big); font-weight: 300; letter-spacing: -0.04em; line-height: 1; }
 .hero-side { justify-self: end; display: grid; gap: 24px; max-width: 34rem; }
-.hero-sub { max-width: 30ch; font-size: var(--s-lead); line-height: 1.3; letter-spacing: -0.02em; color: var(--ink); padding-bottom: 0.3em; }
+.hero-sub { margin-top: 0; max-width: 30ch; font-size: var(--s-lead); line-height: 1.3; letter-spacing: -0.02em; color: var(--ink); padding-bottom: 0.3em; }
 .occasions { display: flex; flex-wrap: wrap; gap: 8px; }
 .occasions button {
   font: 400 var(--s-small)/1 var(--face); color: var(--soft);
@@ -157,6 +157,7 @@ p { margin: 0; }
   opacity: var(--b, 1); z-index: -1; pointer-events: none;
 }
 .car img { -webkit-box-reflect: below 2px linear-gradient(transparent 72%, rgba(255, 255, 255, 0.14)); } /* taste-skill-ignore: reflection on the polished porch floor */
+.car[data-real] img { filter: brightness(calc(var(--b, 1) * 0.86)) contrast(1.06) saturate(0.88); }
 .arc.dragging .car img, .arc.scrolling .car img { transition: none; }
 
 .plate {
@@ -444,7 +445,7 @@ p { margin: 0; }
         <button class="car" role="option" data-id="red-audi-a3-cabriolet" data-word="Cabriolet" data-name="Audi A3 Cabriolet" data-fact="Roof down for the photoshoot." data-occ="Weddings"><img draggable="false" src="assets/cars/red-audi-a3-cabriolet.webp" alt="Red Audi A3 Cabriolet with the roof down" width="561" height="233"></button>
         <button class="car" role="option" data-id="black-mercedes-amg-g-63" data-word="G 63" data-name="Mercedes-AMG G 63" data-fact="For an entrance people will photograph." data-occ="Weddings"><img draggable="false" src="assets/cars/black-mercedes-amg-g-63.webp" alt="Black Mercedes-AMG G 63" width="984" height="541"></button>
         <button class="car" role="option" data-id="red-mercedes-maybach-gls" data-word="Maybach" data-name="Mercedes-Maybach GLS" data-fact="A luxury SUV for the couple or the family." data-occ="Weddings"><img draggable="false" src="assets/cars/red-mercedes-maybach-gls.webp" alt="Red Mercedes-Maybach GLS" width="1069" height="516"></button>
-        <button class="car" role="option" data-id="silver-rolls-royce-ghost" data-word="Ghost" data-name="Rolls-Royce Ghost" data-fact="The wedding car. Flowers and ribbon on request." data-occ="Weddings"><img draggable="false" src="assets/cars/silver-rolls-royce-ghost.webp" alt="Silver Rolls-Royce Ghost" width="546" height="250"></button>
+        <button class="car" role="option" data-id="silver-rolls-royce-ghost" data-word="Ghost" data-name="Rolls-Royce Ghost" data-fact="The wedding car, dressed in flowers by the Jhajj'z team." data-occ="Weddings" data-real><img draggable="false" src="assets/cars/jhajjz-rolls-royce-ghost-wedding.webp" alt="Jhajj'z white Rolls-Royce Ghost decorated with flowers" width="973" height="627"></button>
         <button class="car" role="option" data-id="jhajjz-bentley-flying-spur" data-word="Flying Spur" data-name="Bentley Flying Spur" data-fact="From the Jhajj'z fleet. For the couple and for VIP guests." data-real><img draggable="false" src="assets/cars/jhajjz-bentley-flying-spur.webp" alt="Silver Bentley Flying Spur from the Jhajj'z fleet" width="1446" height="725"></button>
         <button class="car" role="option" data-id="black-mercedes-benz-s-class" data-word="S-Class" data-name="Mercedes-Benz S-Class" data-fact="For delegations, dignitaries and the drive home." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/black-mercedes-benz-s-class.webp" alt="Black Mercedes-Benz S-Class" width="754" height="315"></button>
         <button class="car" role="option" data-id="white-bmw-7-series" data-word="7 Series" data-name="BMW 7 Series" data-fact="Hotel desks and VIP convoys, with a Jhajj'z chauffeur." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/white-bmw-7-series.webp" alt="White BMW 7 Series" width="1031" height="369"></button>
@@ -466,7 +467,7 @@ p { margin: 0; }
         <h2 id="car-name">Rolls-Royce Ghost</h2>
         <p id="car-fact">The wedding car. Flowers and ribbon on request.</p>
       </div>
-      <p class="plate-ask"><span id="car-note">Model picture is illustrative.</span><br>Ask about this car on <a class="wa-link" href="https://wa.me/919803600001" target="_blank" rel="noopener">WhatsApp</a></p>
+      <p class="plate-ask"><span id="car-note">Photographed at the Jhajj'z yard.</span><br>Ask about this car on <a class="wa-link" href="https://wa.me/919803600001" target="_blank" rel="noopener">WhatsApp</a></p>
     </div>
   </section>
 
@@ -516,9 +517,9 @@ p { margin: 0; }
       <h2 id="fleet-title"><span class="w1">The</span><span class="w2">fleet</span></h2>
     </div>
     <div class="fleet-body">
-      <div class="rider" aria-hidden="true"><img id="rider" src="assets/cars/silver-rolls-royce-ghost.webp" alt="" width="546" height="250"></div>
+      <div class="rider" aria-hidden="true"><img id="rider" src="assets/cars/jhajjz-rolls-royce-ghost-wedding.webp" alt="" width="973" height="627"></div>
       <ul class="rows">
-        <li data-car="silver-rolls-royce-ghost"><div class="r-name"><h3>Luxury cars</h3><p>Rolls-Royce, Bentley, Mercedes-Benz, BMW, Jaguar</p></div><p class="r-use">Weddings, VIPs, arrivals</p></li>
+        <li data-car="jhajjz-rolls-royce-ghost-wedding"><div class="r-name"><h3>Luxury cars</h3><p>Rolls-Royce, Bentley, Mercedes-Benz, BMW, Jaguar</p></div><p class="r-use">Weddings, VIPs, arrivals</p></li>
         <li data-car="white-mercedes-benz-e-class"><div class="r-name"><h3>Executive cabs</h3><p>Sedans for meetings and airport runs</p></div><p class="r-use">Corporate travel</p></li>
         <li data-car="black-mercedes-amg-g-63"><div class="r-name"><h3>SUVs</h3><p>Range Rover, Mercedes-AMG G 63, Land Cruiser and more</p></div><p class="r-use">Convoys and long drives</p></li>
         <li data-car="white-toyota-vellfire"><div class="r-name"><h3>Luxury MPVs</h3><p>Toyota Vellfire, Mercedes-Benz V-Class</p></div><p class="r-use">Families and guests</p></li>
@@ -767,7 +768,7 @@ p { margin: 0; }
 
   /* ---- Fleet: the car rides down the list ---- */
   const rider = document.getElementById('rider');
-  let riderCar = 'silver-rolls-royce-ghost';
+  let riderCar = 'jhajjz-rolls-royce-ghost-wedding';
   const rows = [...document.querySelectorAll('.rows li')];
   function riderScroll() {
     if (innerWidth <= 640) return;

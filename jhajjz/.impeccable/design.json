@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T07:55:53.612364Z",
+  "title": "Design System: Jhajj'z",
+  "extensions": {
+    "colorMeta": {
+      "night": {
+        "role": "neutral",
+        "displayName": "Night",
+        "canonical": "#0d0c0a",
+        "tonalRamp": [
+          "#0d0c0a",
+          "#16140f",
+          "#1d1a15",
+          "#27231c"
+        ]
+      },
+      "bone": {
+        "role": "neutral",
+        "displayName": "Bone",
+        "canonical": "#eeece7",
+        "tonalRamp": [
+          "#eeece7",
+          "#b3aea5"
+        ]
+      },
+      "sign-red": {
+        "role": "primary",
+        "displayName": "Sign Red",
+        "canonical": "#c41f12",
+        "tonalRamp": [
+          "#c41f12",
+          "#d92a1a"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The h1 only."
+      },
+      "marque": {
+        "displayName": "Marque",
+        "purpose": "The current car's short name behind the line-up; scenery, never copy."
+      }
+    },
+    "shadows": [
+      {
+        "name": "tyre-contact",
+        "value": "radial-gradient(closest-side, rgba(0,0,0,0.75), rgba(0,0,0,0))",
+        "purpose": "Contact shadow under each line-up car."
+      },
+      {
+        "name": "porch-light",
+        "value": "radial-gradient(closest-side, rgba(255,236,200,0.28), rgba(255,236,200,0))",
+        "purpose": "Light pool under the centre car."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All entrances and state changes."
+      },
+      {
+        "name": "rise",
+        "value": "opacity 0.4\u21921, translateY 24px\u21920, 700\u2013900ms, staggered 80ms",
+        "purpose": "Section entrances, from a visible resting state."
+      },
+      {
+        "name": "ticker",
+        "value": "translateX 0\u2192-50%, 60s linear, infinite",
+        "purpose": "Cities band; static under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tablet",
+        "value": "1024px"
+      },
+      {
+        "name": "phone",
+        "value": "640px"
+      }
+    ],
+    "components": [
+      {
+        "name": "button-primary",
+        "html": "<a class=\"button\" href=\"#\">Enquire on WhatsApp</a>",
+        "css": ".button{display:inline-flex;align-items:center;min-height:52px;padding:0 1.4em;background:#c41f12;color:#fff;font:500 14px/1 Switzer,Helvetica,Arial,sans-serif;text-decoration:none}.button:hover{background:#d92a1a}"
+      },
+      {
+        "name": "switch",
+        "html": "<button class=\"sw\" aria-pressed=\"true\">Weddings</button> <button class=\"sw\" aria-pressed=\"false\">Groups</button>",
+        "css": ".sw{font:400 14px/1 Switzer,Helvetica,Arial,sans-serif;background:#1d1a15;color:#b3aea5;border:0;padding:12px 16px;min-height:44px}.sw[aria-pressed=true]{background:#eeece7;color:#0d0c0a}"
+      }
+    ],
+    "narrative": {
+      "northStar": "The arrival porch",
+      "rules": [
+        "Cars and photographs are the only bright things on a screen.",
+        "Red only for action, the active fleet row and the cities field.",
+        "Square corners; flat surfaces; depth only from light."
+      ]
+    }
+  }
+}
