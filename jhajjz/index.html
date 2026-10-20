@@ -2,6 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Chauffeur-driven luxury cars and coaches from Mohali, across India since 1998.">
+<script>document.documentElement.classList.add('intro'); setTimeout(() => document.documentElement.classList.remove('intro'), 4000);</script>
 <style>
 /* Layout: one warm night field top to bottom, the porch at night. Lit cars and photographs are the exhibits; one red (the Jhajj'z sign) is the only action colour. */
 @font-face { font-family: "Switzer"; src: url("assets/fonts/switzer-300.woff2") format("woff2"); font-weight: 300; font-display: swap; }
@@ -32,7 +33,9 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; overflow-x: clip; }
+html { overflow-x: clip; }
+html.lenis { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
 body {
   margin: 0;
   background: var(--bg);
@@ -113,6 +116,7 @@ p { margin: 0; }
   content: ""; position: absolute; left: 50%; bottom: 4%; width: 62vw; height: 22%; transform: translateX(-50%);
   background: radial-gradient(closest-side, rgba(255, 236, 200, 0.28), rgba(255, 236, 200, 0)); /* taste-skill-ignore: the porch light pool under the car */
   pointer-events: none;
+  opacity: var(--light, 1);
 }
 .floor {
   position: absolute; left: 0; right: 0; bottom: 0; height: 30%; z-index: 0;
@@ -173,7 +177,13 @@ p { margin: 0; }
 .plate-name.swap h2, .plate-name.swap p { opacity: 0; }
 
 /* ---------- Cities: one red field ---------- */
-.cities { background: var(--accent); color: var(--accent-ink); padding-block: clamp(40px, 5vw, 72px); margin-top: clamp(48px, 5vw, 88px); overflow: hidden; }
+/* The band hangs across the page like a wedding ribbon; it tilts further with scroll speed. */
+.cities {
+  background: var(--accent); color: var(--accent-ink);
+  padding-block: clamp(40px, 5vw, 72px); margin-top: clamp(64px, 7vw, 120px); margin-bottom: clamp(24px, 3vw, 48px);
+  margin-inline: -6vw; padding-inline: 6vw;
+  overflow: hidden; transform: rotate(var(--tilt, -2.5deg)); transform-origin: 50% 50%;
+}
 .cities-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px 32px; flex-wrap: wrap; }
 .cities-head h2 { font-size: var(--s-lead); font-weight: 500; letter-spacing: -0.02em; }
 .cities-head p { font-size: var(--s-body); }
@@ -182,6 +192,7 @@ p { margin: 0; }
 .ticker-line span { color: rgba(255, 255, 255, 0.62); }
 @keyframes ticker { to { transform: translateX(-50%); } }
 .cities:hover .ticker { animation-play-state: paused; }
+.has-gsap .ticker { animation: none; }
 
 /* ---------- Occasions: cards crossing a held photograph ---------- */
 .occasion-run { position: relative; height: 240svh; }
@@ -280,6 +291,21 @@ p { margin: 0; }
 .about-text h2 { font-size: var(--s-head); margin-bottom: 40px; }
 .statement { font-size: var(--s-lead); line-height: 1.22; letter-spacing: -0.025em; font-weight: 300; }
 .statement + .statement { margin-top: 1.1em; color: var(--soft); }
+.has-gsap .statement, .has-gsap .statement + .statement { color: var(--ink); }
+.has-gsap .statement .word { color: #3d382f; }
+.has-gsap .statement.fill { line-height: 1.75; }
+.tagged { position: relative; white-space: nowrap; }
+.tagged::after {
+  content: attr(data-tag);
+  position: absolute; left: 50%; bottom: 84%;
+  background: var(--accent); color: var(--accent-ink);
+  font: 500 12px/1 var(--face); letter-spacing: 0; white-space: nowrap;
+  padding: 5px 7px;
+  transform: translateX(-50%) rotate(var(--rot, -3deg)) scale(0);
+  transition: transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+.tagged.pop::after { transform: translateX(-50%) rotate(var(--rot, -3deg)) scale(1); }
 .statement img { float: left; width: 3.6em; height: 3.6em; object-fit: cover; margin: 0.12em 0.5em 0 0; }
 
 /* ---------- Contact: visit card on the night yard ---------- */
@@ -316,19 +342,12 @@ p { margin: 0; }
 .credit { margin-top: 14px; font-size: var(--s-small); color: var(--soft); }
 
 /* ---------- Entrances ---------- */
+.intro .hero-copy, .intro .porch, .intro .plate, .intro .bar { opacity: 0; }
+.wave .char, .wave .word { will-change: transform; }
 .js .rise { opacity: 0.4; transform: translateY(24px); transition: opacity 700ms var(--ease), transform 900ms var(--ease); transition-delay: var(--d, 0ms); }
 .js .rise.in { opacity: 1; transform: none; }
 .js .wipe img { opacity: 0.35; transform: translateY(32px); transition: opacity 900ms var(--ease), transform 1200ms var(--ease); }
 .js .wipe.in img { opacity: 1; transform: none; }
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .js .rise, .js .wipe img { opacity: 1; transform: none; clip-path: none; transition: none; }
-  .car img, .contact-photo img, .stage-photo img { transition: none; transform: none; }
-  .ticker { animation: none; width: auto; }
-  .ticker-line { white-space: normal; font-size: var(--s-head); }
-  .ticker-line[aria-hidden] { display: none; }
-}
 
 /* ---------- Tablet ---------- */
 @media (max-width: 1024px) {
@@ -472,7 +491,7 @@ p { margin: 0; }
   </section>
 
   <section class="cities" aria-labelledby="cities-title">
-    <div class="wrap cities-head"><h2 id="cities-title">Where we drive</h2><p>Chauffeurs and cars in 14 cities, from the Mohali yard.</p></div>
+    <div class="wrap cities-head"><h2 id="cities-title" class="wave">Where we drive</h2><p>Chauffeurs and cars in 14 cities, from the Mohali yard.</p></div>
     <div class="ticker"><p class="ticker-line">Chandigarh <span>New Delhi</span> Gurgaon <span>Jaipur</span> Udaipur <span>Mumbai</span> Chennai <span>Kolkata</span> Bhubaneswar <span>Dehradun</span> Mussoorie <span>Rishikesh</span> Haridwar <span>Ropar</span></p><p class="ticker-line" aria-hidden="true">Chandigarh <span>New Delhi</span> Gurgaon <span>Jaipur</span> Udaipur <span>Mumbai</span> Chennai <span>Kolkata</span> Bhubaneswar <span>Dehradun</span> Mussoorie <span>Rishikesh</span> Haridwar <span>Ropar</span></p></div>
   </section>
 
@@ -480,7 +499,7 @@ p { margin: 0; }
     <div class="stage">
       <div class="stage-photo"><img src="assets/photos/wedding-convoy-above.webp" alt="Jhajj'z cars decorated with red ribbon for a wedding, seen from above" width="1200" height="800" loading="lazy"></div>
       <div class="wrap stage-head">
-        <h2 id="occ-title">One call, every occasion</h2>
+        <h2 id="occ-title" class="wave">One call, every occasion</h2>
         <p>The couple's car, the guests' cars and the coaches, from one fleet with one team.</p>
       </div>
       <div class="track" id="track">
@@ -537,7 +556,7 @@ p { margin: 0; }
   </section>
 
   <section class="wrap services" aria-labelledby="svc-title">
-    <h2 id="svc-title" class="rise">What we drive for</h2>
+    <h2 id="svc-title" class="rise wave">What we drive for</h2>
     <div class="cols">
       <div class="col rise" style="--d:0ms">
         <h3>Weddings &amp; events</h3>
@@ -580,7 +599,7 @@ p { margin: 0; }
   </section>
 
   <section class="wrap gallery" aria-labelledby="gal-title">
-    <h2 id="gal-title" class="rise">Out on the road</h2>
+    <h2 id="gal-title" class="rise wave">Out on the road</h2>
     <div class="g-grid">
       <figure class="g1 wipe"><img src="assets/photos/e-class-ribbon.webp" alt="Mercedes-Benz E-Class decorated with red ribbon for a wedding" width="1200" height="1600" loading="lazy"><figcaption>E-Class, dressed for a wedding</figcaption></figure>
       <figure class="g2 wipe"><img src="assets/photos/bentley-flying-spur.webp" alt="Silver Bentley Flying Spur from the Jhajj'z fleet" width="1600" height="1067" loading="lazy"><figcaption>Bentley Flying Spur</figcaption></figure>
@@ -600,9 +619,9 @@ p { margin: 0; }
       <p><strong>+91 98036 00001</strong>Calls and WhatsApp</p>
     </div>
     <div class="about-text">
-      <h2 id="yard-title" class="rise">On the road since 1998</h2>
-      <p class="statement rise" style="--d:80ms">Jhajj'z runs chauffeur-driven cars from a yard on PCA Stadium Road in Mohali.</p>
-      <p class="statement rise" style="--d:160ms">The fleet runs from a Rolls-Royce and a Bentley to Vellfires, vintage tourers and Volvo coaches, so one call covers a wedding, a delegation or a daily commute.</p>
+      <h2 id="yard-title" class="rise wave">On the road since 1998</h2>
+      <p class="statement fill rise" style="--d:80ms">Jhajj'z runs <span class="tagged" data-tag="Chauffeur always included">chauffeur-driven</span> cars from a yard on PCA Stadium Road in <span class="tagged" data-tag="Since 1998" style="--rot:3deg">Mohali.</span></p>
+      <p class="statement fill rise" style="--d:160ms">The fleet runs from a Rolls-Royce and a Bentley to Vellfires, vintage tourers and Volvo coaches, so <span class="tagged" data-tag="14 cities" style="--rot:-2deg">one call</span> covers a wedding, a delegation or a daily commute.</p>
     </div>
     <figure class="about-pic wipe"><img src="assets/photos/vintage-tourers-yard.webp" alt="Blue and white vintage open tourers at the Jhajj'z transport yard" width="1600" height="1067" loading="lazy"><figcaption>Vintage tourers at the yard, Sector 63</figcaption></figure>
   </section>
@@ -610,7 +629,7 @@ p { margin: 0; }
   <section class="contact" id="visit" aria-labelledby="visit-title">
     <div class="contact-photo"><img src="assets/photos/vintage-showroom-night.webp" alt="Yellow and white vintage cars outside the Jhajj'z showroom at dusk" width="1600" height="1067" loading="lazy"></div>
     <div class="card rise">
-      <h2 id="visit-title">Visit the yard</h2>
+      <h2 id="visit-title" class="wave">Visit the yard</h2>
       <address>SSS-106, 107, PCA Stadium Road<br>Sector 63, Mohali (SAS Nagar), Punjab</address>
       <dl>
         <div><dt>Phone &amp; WhatsApp</dt><dd><a href="tel:+919803600001">+91 98036 00001</a></dd></div>
@@ -642,11 +661,14 @@ p { margin: 0; }
   <p class="credit">Photographs are of the Jhajj'z fleet. Cut-out model pictures in the line-up are illustrative, from CarWale and CarDekho.</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
 <script>
 (() => {
   const root = document.documentElement;
   root.classList.add('js');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const WA = 'https://wa.me/919803600001';
 
   /* ---- Hero line-up ---- */
@@ -688,18 +710,15 @@ p { margin: 0; }
     document.getElementById('car-note').textContent = car.hasAttribute('data-real') ? 'Photographed at the Jhajj\'z yard.' : 'Model picture is illustrative.';
     const name = car.dataset.name, fact = car.dataset.fact;
     const word = car.dataset.word || name;
-    if (reduce) { nameEl.textContent = name; factEl.textContent = fact; marque.textContent = word; }
-    else {
-      plate.classList.add('swap'); marque.classList.add('swap');
-      setTimeout(() => { nameEl.textContent = name; factEl.textContent = fact; marque.textContent = word; plate.classList.remove('swap'); marque.classList.remove('swap'); }, 180);
-    }
+    plate.classList.add('swap'); marque.classList.add('swap');
+    setTimeout(() => { nameEl.textContent = name; factEl.textContent = fact; marque.textContent = word; plate.classList.remove('swap'); marque.classList.remove('swap'); }, 180);
     const msg = encodeURIComponent(`Hello Jhajj'z, I'd like to ask about the ${name}. Date: , Pickup city: `);
     waLinks.forEach(a => a.href = `${WA}?text=${msg}`);
     occBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.go === car.dataset.id)));
   }
 
   function goTo(car, smooth = true) {
-    arc.scrollTo({ left: centreOf(car) - arc.clientWidth / 2, behavior: smooth && !reduce ? 'smooth' : 'auto' });
+    arc.scrollTo({ left: centreOf(car) - arc.clientWidth / 2, behavior: smooth ? 'smooth' : 'auto' });
   }
 
   arc.addEventListener('scroll', () => {
@@ -763,7 +782,7 @@ p { margin: 0; }
     const hp = Math.min(1, Math.max(0, (p - 0.02) / 0.22));
     head.style.setProperty('--head-x', (-hp * 60).toFixed(1) + 'px');
     head.style.setProperty('--head-o', (1 - hp).toFixed(3));
-    if (!reduce) stagePhoto.style.setProperty('--zoom', (1.06 + p * 0.08).toFixed(4));
+    stagePhoto.style.setProperty('--zoom', (1.06 + p * 0.08).toFixed(4));
   }
 
   /* ---- Fleet: the car rides down the list ---- */
@@ -823,7 +842,7 @@ p { margin: 0; }
 
   /* ---- Entrances and the contact drift ---- */
   const contactImg = document.querySelector('.contact-photo img');
-  if ('IntersectionObserver' in window && !reduce) {
+  if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => entries.forEach(en => {
       if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
     }), { rootMargin: '0px 0px -8% 0px' });
@@ -835,6 +854,111 @@ p { margin: 0; }
     drift.observe(contactImg);
   } else {
     document.querySelectorAll('.rise, .wipe').forEach(el => el.classList.add('in'));
+  }
+})();
+/* ---- Motion: GSAP (ScrollTrigger, SplitText) and Lenis, loaded from the CDN ---- */
+(() => {
+  const root = document.documentElement;
+  if (!window.gsap || !window.ScrollTrigger || !window.SplitText) { root.classList.remove('intro'); return; }
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+  root.classList.add('has-gsap');
+
+  // Smooth scroll on GSAP's clock, so ScrollTrigger reads the same frame Lenis draws.
+  if (window.Lenis) {
+    const lenis = new Lenis({ lerp: 0.1 });
+    lenis.on('scroll', ScrollTrigger.update);
+    // In-page links: Lenis's own anchor option lands off-target between sections, so aim at the page offset.
+    document.querySelectorAll('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
+      const el = document.querySelector(a.getAttribute('href'));
+      if (!el) return;
+      e.preventDefault();
+      lenis.scrollTo(el.getBoundingClientRect().top + scrollY, { duration: 1.4 });
+    }));
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // Split text only once Switzer has loaded, or the line breaks come out wrong.
+  Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1200))]).then(() => {
+    arrival(); waves(); ribbon(); inkFill(); reveal();
+    ScrollTrigger.refresh();
+  });
+
+  /* The arrival: the porch light comes up and the line-up rolls in out of the dark. */
+  function arrival() {
+    const h1 = SplitText.create('#hero-title', { type: 'lines', mask: 'lines' });
+    gsap.set('.porch', { '--light': 0 });
+    gsap.timeline({ defaults: { ease: 'expo.out' } })
+      .from('.floor', { scaleX: 0, duration: 1.4, ease: 'expo.inOut' }, 0)
+      .fromTo('.arc', { autoAlpha: 0, y: 48, filter: 'brightness(0)' }, { autoAlpha: 1, y: 0, filter: 'brightness(1)', duration: 2.2, ease: 'power2.inOut', clearProps: 'filter,transform' }, 0.2)
+      .to('.porch', { '--light': 1, duration: 1.8, ease: 'power2.inOut' }, 0.35)
+      .from('#marque', { opacity: 0, y: 60, duration: 1.8, clearProps: 'transform,opacity' }, 0.5)
+      .from(h1.lines, { yPercent: 105, duration: 1.3, stagger: 0.1 }, 0.15)
+      .from(['.bar', '.hero-side', '.plate'], { autoAlpha: 0, y: 16, duration: 1.1, stagger: 0.08, clearProps: 'transform' }, 0.7);
+    root.classList.remove('intro');
+  }
+
+  /* Headings: letters rise on a wave out of a mask, once, as they come into view. */
+  function waves() {
+    const heads = [...document.querySelectorAll('.wave'), ...document.querySelectorAll('.fleet-head .w1, .fleet-head .w2')];
+    heads.forEach((h) => {
+      h.classList.remove('rise');
+      const split = SplitText.create(h, { type: 'words,chars', mask: 'words' });
+      gsap.from(split.chars, {
+        yPercent: 115, rotate: 10, duration: 1.1, ease: 'expo.out', stagger: 0.022,
+        scrollTrigger: { trigger: h.closest('.fleet-head') || h, start: 'top 88%', once: true },
+      });
+    });
+  }
+
+  /* Cities ribbon: the ticker follows scroll direction, speeds up with it, and the band tilts. */
+  function ribbon() {
+    const band = document.querySelector('.cities');
+    const loop = gsap.to('.ticker', { xPercent: -50, duration: 60, ease: 'none', repeat: -1 });
+    loop.totalTime(loop.duration() * 100);
+    let dir = 1, hover = false;
+    gsap.set(band, { '--tilt': '-2.5deg' });
+    ScrollTrigger.create({
+      trigger: band, start: 'top bottom', end: 'bottom top',
+      onUpdate(self) {
+        const v = self.getVelocity();
+        dir = self.direction;
+        if (!hover) {
+          gsap.to(loop, { timeScale: dir * (1 + Math.min(Math.abs(v) / 120, 10)), duration: 0.2, overwrite: true,
+            onComplete: () => gsap.to(loop, { timeScale: dir, duration: 1.4, ease: 'power2.out' }) });
+        }
+        gsap.to(band, { '--tilt': (-2.5 - gsap.utils.clamp(-2, 2, v / 1200)) + 'deg', duration: 0.4, overwrite: true,
+          onComplete: () => gsap.to(band, { '--tilt': '-2.5deg', duration: 1.4, ease: 'power3.out' }) });
+      },
+    });
+    band.addEventListener('mouseenter', () => { hover = true; gsap.to(loop, { timeScale: 0, duration: 0.8, overwrite: true }); });
+    band.addEventListener('mouseleave', () => { hover = false; gsap.to(loop, { timeScale: dir, duration: 0.8, overwrite: true }); });
+  }
+
+  /* The yard text fills with ink as it is read, and real facts pop on as tags. */
+  function inkFill() {
+    document.querySelectorAll('.statement.fill').forEach((p) => {
+      p.classList.remove('rise');
+      const split = SplitText.create(p, { type: 'words', wordsClass: 'word' });
+      gsap.to(split.words, {
+        color: '#eeece7', stagger: 0.1, ease: 'none',
+        scrollTrigger: { trigger: p, start: 'top 85%', end: 'bottom 55%', scrub: true },
+      });
+    });
+    document.querySelectorAll('.tagged').forEach((t) => ScrollTrigger.create({
+      trigger: t, start: 'top 62%',
+      onEnter: () => t.classList.add('pop'), onLeaveBack: () => t.classList.remove('pop'),
+    }));
+  }
+
+  /* Occasions: the held photograph opens from a framed plate to full bleed as it arrives. */
+  function reveal() {
+    gsap.matchMedia().add('(min-width: 641px)', () => {
+      gsap.fromTo('.stage-photo', { clipPath: 'inset(18% 24% 18% 24%)' }, {
+        clipPath: 'inset(0% 0% 0% 0%)', ease: 'none',
+        scrollTrigger: { trigger: '.occasion-run', start: 'top bottom', end: 'top top', scrub: true },
+      });
+    });
   }
 })();
 </script>
