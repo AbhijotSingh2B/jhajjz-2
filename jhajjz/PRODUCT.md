@@ -34,6 +34,7 @@ A family-run Mohali/Chandigarh fleet running since 1998 that covers every scale 
 ## Capabilities and Constraints
 
 - Fleet categories: luxury cars (Rolls-Royce, Bentley, Mercedes-Benz, BMW, Jaguar), executive cabs, SUVs (Range Rover), luxury MPVs (Toyota Vellfire, Mercedes-Benz V-Class), vintage cars, convertibles, limousines (Chrysler 300C stretch), mini vans (Force Urbania), luxury coaches (Volvo, Mercedes-Benz).
+- Models listed on the jhajjz.vercel.app fleet pages: Rolls-Royce Ghost, Bentley Flying Spur, Mercedes-Benz S-Class, E-Class, GLE, GLS, V-Class, Mercedes-Maybach GLS, Mercedes-AMG G 63, BMW 7 Series, X5, X7, i8, Audi Q7, Audi A3 Cabriolet, Jaguar XJ, F-Pace, Range Rover, Range Rover Sport, Land Rover Defender, Toyota Land Cruiser, Fortuner, Vellfire, Innova Crysta, HiAce, Force Urbania, Chrysler 300C stretch, vintage open tourers, Mercedes-Benz coaches (Jhajj'z branded).
 - Weddings: the team handles decoration, timings and chauffeurs on the day.
 - Undecided: the primary call to action (WhatsApp, call or form). The design keeps contact routes visible without committing.
 - No prices, specs or opening hours are published.

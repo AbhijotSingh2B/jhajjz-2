@@ -18,15 +18,6 @@
   --accent: #c41f12;
   --accent-hover: #d92a1a;
   --accent-ink: #ffffff;
-  --paper: #eeece7;
-  --paper-ink: #15130f;
-  --paper-soft: #4d473d;
-  --tone-1: #2b2520;
-  --tone-2: #1f2826;
-  --tone-3: #2a2a23;
-  --tone-4: #2e2321;
-  --tone-5: #232729;
-  --tone-6: #2b261d;
 
   --face: "Switzer", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --s-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
@@ -98,15 +89,16 @@ p { margin: 0; }
   padding-top: clamp(16px, 2.4vw, 40px);
 }
 .hero h1 { font-size: var(--s-big); font-weight: 300; letter-spacing: -0.04em; line-height: 1; }
-.hero-sub { justify-self: end; max-width: 30ch; font-size: var(--s-lead); line-height: 1.3; letter-spacing: -0.02em; color: var(--ink); padding-bottom: 0.3em; }
-.occasions { display: flex; flex-wrap: wrap; gap: 8px; grid-column: 1; grid-row: 1; justify-self: start; }
+.hero-side { justify-self: end; display: grid; gap: 24px; max-width: 34rem; }
+.hero-sub { max-width: 30ch; font-size: var(--s-lead); line-height: 1.3; letter-spacing: -0.02em; color: var(--ink); padding-bottom: 0.3em; }
+.occasions { display: flex; flex-wrap: wrap; gap: 8px; }
 .occasions button {
   font: 400 var(--s-small)/1 var(--face); color: var(--soft);
   background: var(--surface); border: 0; padding: 12px 16px; min-height: 44px; cursor: pointer;
   transition: background-color 200ms var(--ease), color 200ms var(--ease);
 }
 .occasions button:hover { color: var(--ink); background: #27231c; }
-.occasions button[aria-pressed="true"] { background: var(--ink); color: var(--paper-ink); }
+.occasions button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 
 .porch { position: relative; margin-top: clamp(8px, 1.5vw, 24px); overflow: hidden; }
 .marque {
@@ -119,7 +111,7 @@ p { margin: 0; }
 .marque.swap { opacity: 0; transform: translateX(-50%) translateY(14px); }
 .porch::after {
   content: ""; position: absolute; left: 50%; bottom: 4%; width: 62vw; height: 22%; transform: translateX(-50%);
-  background: radial-gradient(closest-side, rgba(255, 236, 200, 0.16), rgba(255, 236, 200, 0)); /* taste-skill-ignore: the porch light pool under the car */
+  background: radial-gradient(closest-side, rgba(255, 236, 200, 0.28), rgba(255, 236, 200, 0)); /* taste-skill-ignore: the porch light pool under the car */
   pointer-events: none;
 }
 .floor {
@@ -159,10 +151,16 @@ p { margin: 0; }
   transition: transform 260ms var(--ease), filter 260ms var(--ease);
   user-select: none; -webkit-user-drag: none;
 }
+.car::after {
+  content: ""; position: absolute; left: 50%; bottom: 6.5%; width: calc(var(--s, 1) * 92%); height: 7%; transform: translate(-50%, var(--y, 0px));
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); /* taste-skill-ignore: tyre contact shadow on the porch floor */
+  opacity: var(--b, 1); z-index: -1; pointer-events: none;
+}
+.car img { -webkit-box-reflect: below 2px linear-gradient(transparent 72%, rgba(255, 255, 255, 0.14)); } /* taste-skill-ignore: reflection on the polished porch floor */
 .arc.dragging .car img, .arc.scrolling .car img { transition: none; }
 
 .plate {
-  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px 32px;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px 32px;
   padding-top: 20px;
 }
 .plate-name { grid-column: 2; grid-row: 1; text-align: center; }
@@ -202,7 +200,7 @@ p { margin: 0; }
   will-change: transform;
   pointer-events: none;
 }
-.o-card { flex: 0 0 var(--card-w); height: var(--card-h); display: grid; grid-template-rows: 68% 32%; background: var(--panel); }
+.o-card { flex: 0 0 var(--card-w); height: var(--card-h); display: grid; grid-template-rows: 68% 32%; background: var(--bg); }
 .o-card img { width: 100%; height: 100%; object-fit: cover; }
 .o-card .o-text { display: grid; grid-template-columns: auto 1fr; align-items: end; gap: 24px; padding: 28px; }
 .o-card h3 { font-size: var(--s-head); }
@@ -219,8 +217,10 @@ p { margin: 0; }
 .fleet-head .w2 { grid-column: 3; }
 .fleet-body { position: relative; margin-top: 56px; }
 .fleet-head { min-height: clamp(110px, 9vw, 150px); }
-.rider { position: absolute; top: var(--section); bottom: 0; left: 50%; width: 17%; transform: translateX(-50%); pointer-events: none; z-index: 2; }
-.rider img { position: sticky; top: 46svh; width: 100%; height: auto; }
+.rider { position: absolute; top: 0; bottom: 0; left: 50%; width: 17%; transform: translateX(-50%); pointer-events: none; z-index: 2; }
+.rider img { position: sticky; top: 46svh; width: 100%; height: auto; transition: opacity 220ms var(--ease); }
+.rider img.swap { opacity: 0; }
+.fleet-head::after { content: ""; grid-column: 2; grid-row: 1; align-self: end; aspect-ratio: 1012 / 388; width: 78%; justify-self: center; background: url("assets/cars/white-range-rover.webp") center / contain no-repeat; }
 .rows { list-style: none; margin: 0; padding: 0; }
 .rows li {
   display: grid; grid-template-columns: 1fr 22% 1fr; align-items: center;
@@ -289,7 +289,7 @@ p { margin: 0; }
   position: relative; z-index: 1;
   width: min(400px, 100%);
   margin: 60px auto 60px max(var(--gutter), env(safe-area-inset-left, 0px));
-  background: var(--paper); color: var(--paper-ink);
+  background: var(--bg); color: var(--ink);
   padding: 32px 32px 0;
   display: grid; gap: 22px;
 }
@@ -297,11 +297,11 @@ p { margin: 0; }
 .card address { font-style: normal; line-height: 1.45; }
 .card dl { margin: 0; display: grid; gap: 10px; font-variant-numeric: tabular-nums; }
 .card dl div { display: flex; justify-content: space-between; gap: 16px; }
-.card dt { color: var(--paper-soft); }
+.card dt { color: var(--soft); }
 .card dd { margin: 0; text-align: right; }
 .card dd a { text-decoration: none; }
 .card dd a:hover { text-decoration: underline; }
-.card .copy { font: 500 var(--s-small)/1 var(--face); background: none; border: 0; color: var(--paper-ink); padding: 4px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 0.22em; }
+.card .copy { font: 500 var(--s-small)/1 var(--face); background: none; border: 0; color: var(--ink); padding: 4px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 0.22em; }
 .card .socials { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: var(--s-small); }
 .card .button { margin-inline: -32px; min-height: 56px; }
 
@@ -315,7 +315,7 @@ p { margin: 0; }
 .credit { margin-top: 14px; font-size: var(--s-small); color: var(--soft); }
 
 /* ---------- Entrances ---------- */
-.js .rise { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease), transform 900ms var(--ease); transition-delay: var(--d, 0ms); }
+.js .rise { opacity: 0.4; transform: translateY(24px); transition: opacity 700ms var(--ease), transform 900ms var(--ease); transition-delay: var(--d, 0ms); }
 .js .rise.in { opacity: 1; transform: none; }
 .js .wipe img { opacity: 0.35; transform: translateY(32px); transition: opacity 900ms var(--ease), transform 1200ms var(--ease); }
 .js .wipe.in img { opacity: 1; transform: none; }
@@ -333,10 +333,9 @@ p { margin: 0; }
 @media (max-width: 1024px) {
   .bar nav { display: none; }
   .bar { grid-template-columns: 1fr auto; }
-  .plate { grid-template-columns: 1fr 1fr; }
-  .plate-name { grid-column: 1 / -1; grid-row: 1; }
-  .occasions { grid-column: 1; grid-row: 2; }
-  .plate-ask { grid-column: 2; grid-row: 2; }
+  .plate { grid-template-columns: 1fr; text-align: center; }
+  .plate-name { grid-column: 1; grid-row: 1; }
+  .plate-ask { grid-column: 1; grid-row: 2; justify-self: center; text-align: center; }
   .arc { --w: 38vw; height: clamp(260px, 40vw, 420px); }
   .col { grid-column: span 4; }
   .say { grid-column: 1 / -1; margin-top: 48px; min-height: 0; }
@@ -357,8 +356,8 @@ p { margin: 0; }
   .arc { --w: 64vw; height: 46vw; padding-top: 0; }
   .plate { grid-template-columns: 1fr; text-align: center; padding-top: 12px; gap: 20px; }
   .plate-name { grid-column: 1; grid-row: 1; }
-  .occasions { grid-column: 1; grid-row: 2; justify-self: center; justify-content: center; }
-  .plate-ask { grid-column: 1; grid-row: 3; justify-self: center; text-align: center; }
+  .plate-ask { grid-column: 1; grid-row: 2; justify-self: center; text-align: center; }
+  .hero-side { justify-self: start; gap: 16px; }
   .plate-name h2 { font-size: var(--s-lead); }
 
   .occasion-run { height: auto; }
@@ -376,7 +375,7 @@ p { margin: 0; }
 
   .fleet-head { grid-template-columns: 1fr 40% 1fr; font-size: var(--s-head); }
   .rider { display: none; }
-  .fleet-head::after { content: ""; grid-column: 2; grid-row: 1; aspect-ratio: 1012 / 388; background: url("assets/cars/white-range-rover.webp") center / contain no-repeat; }
+  .fleet-head::after { width: 100%; }
   .rows li { grid-template-columns: 1fr; gap: 6px; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
   .rows .r-name, .rows .r-use { padding: 0; grid-column: 1; text-align: left; }
 
@@ -389,10 +388,8 @@ p { margin: 0; }
 
   .g-grid { display: flex; flex-direction: column; gap: 64px; }
   .g-grid figure { margin-top: 0; }
-  .g-grid figure:nth-child(4n+1) { width: 70%; }
-  .g-grid figure:nth-child(4n+2) { width: 84%; align-self: flex-end; }
-  .g-grid figure:nth-child(4n+3) { width: 56%; }
-  .g-grid figure:nth-child(4n+4) { width: 100%; }
+  .g-grid figure:nth-child(odd) { width: 100%; }
+  .g-grid figure:nth-child(even) { width: 84%; align-self: flex-end; }
 
   .about { grid-template-columns: minmax(0, 1fr); }
   .about-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -429,41 +426,47 @@ p { margin: 0; }
   <section class="hero" aria-labelledby="hero-title">
     <div class="wrap hero-copy">
       <h1 id="hero-title">Rolls-Royce to<br>Volvo coach.</h1>
-      <p class="hero-sub">Chauffeur-driven luxury cars and coaches from Mohali, across India since 1998.</p>
+      <div class="hero-side">
+        <p class="hero-sub">Chauffeur-driven luxury cars and coaches from Mohali, across India since 1998.</p>
+        <div class="occasions" role="group" aria-label="Show a car for">
+        <button type="button" data-go="silver-rolls-royce-ghost" aria-pressed="true">Weddings</button>
+        <button type="button" data-go="white-bmw-7-series" aria-pressed="false">Corporate &amp; VIP</button>
+        <button type="button" data-go="black-toyota-innova-crysta" aria-pressed="false">Airport &amp; crew</button>
+        <button type="button" data-go="jhajjz-mercedes-benz-coach" aria-pressed="false">Groups</button>
+        </div>
+      </div>
     </div>
 
     <div class="porch">
       <div class="floor" aria-hidden="true"></div>
-      <p class="marque" id="marque" aria-hidden="true">Ghost</p>
+      <div class="marque" id="marque" aria-hidden="true">Ghost</div>
       <div class="arc" id="arc" tabindex="0" role="listbox" aria-label="The Jhajj'z fleet. Drag or use the arrow keys.">
         <button class="car" role="option" data-id="red-audi-a3-cabriolet" data-word="Cabriolet" data-name="Audi A3 Cabriolet" data-fact="Roof down for the photoshoot." data-occ="Weddings"><img draggable="false" src="assets/cars/red-audi-a3-cabriolet.webp" alt="Red Audi A3 Cabriolet with the roof down" width="561" height="233"></button>
         <button class="car" role="option" data-id="black-mercedes-amg-g-63" data-word="G 63" data-name="Mercedes-AMG G 63" data-fact="For an entrance people will photograph." data-occ="Weddings"><img draggable="false" src="assets/cars/black-mercedes-amg-g-63.webp" alt="Black Mercedes-AMG G 63" width="984" height="541"></button>
         <button class="car" role="option" data-id="red-mercedes-maybach-gls" data-word="Maybach" data-name="Mercedes-Maybach GLS" data-fact="A luxury SUV for the couple or the family." data-occ="Weddings"><img draggable="false" src="assets/cars/red-mercedes-maybach-gls.webp" alt="Red Mercedes-Maybach GLS" width="1069" height="516"></button>
         <button class="car" role="option" data-id="silver-rolls-royce-ghost" data-word="Ghost" data-name="Rolls-Royce Ghost" data-fact="The wedding car. Flowers and ribbon on request." data-occ="Weddings"><img draggable="false" src="assets/cars/silver-rolls-royce-ghost.webp" alt="Silver Rolls-Royce Ghost" width="546" height="250"></button>
+        <button class="car" role="option" data-id="jhajjz-bentley-flying-spur" data-word="Flying Spur" data-name="Bentley Flying Spur" data-fact="From the Jhajj'z fleet. For the couple and for VIP guests." data-real><img draggable="false" src="assets/cars/jhajjz-bentley-flying-spur.webp" alt="Silver Bentley Flying Spur from the Jhajj'z fleet" width="1446" height="725"></button>
         <button class="car" role="option" data-id="black-mercedes-benz-s-class" data-word="S-Class" data-name="Mercedes-Benz S-Class" data-fact="For delegations, dignitaries and the drive home." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/black-mercedes-benz-s-class.webp" alt="Black Mercedes-Benz S-Class" width="754" height="315"></button>
         <button class="car" role="option" data-id="white-bmw-7-series" data-word="7 Series" data-name="BMW 7 Series" data-fact="Hotel desks and VIP convoys, with a Jhajj'z chauffeur." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/white-bmw-7-series.webp" alt="White BMW 7 Series" width="1031" height="369"></button>
         <button class="car" role="option" data-id="white-jaguar-xj" data-word="XJ" data-name="Jaguar XJ" data-fact="A quiet saloon for meetings and receptions." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/white-jaguar-xj.webp" alt="White Jaguar XJ" width="938" height="470"></button>
         <button class="car" role="option" data-id="white-mercedes-benz-e-class" data-word="E-Class" data-name="Mercedes-Benz E-Class" data-fact="The executive cab for meetings and airport runs." data-occ="Airport &amp; crew"><img draggable="false" src="assets/cars/white-mercedes-benz-e-class.webp" alt="White Mercedes-Benz E-Class" width="1109" height="428"></button>
         <button class="car" role="option" data-id="white-range-rover" data-word="Range Rover" data-name="Range Rover" data-fact="The SUV for the hills, the farmhouse and the baraat." data-occ="Weddings"><img draggable="false" src="assets/cars/white-range-rover.webp" alt="White Range Rover" width="1012" height="388"></button>
         <button class="car" role="option" data-id="white-toyota-land-cruiser" data-word="Cruiser" data-name="Toyota Land Cruiser" data-fact="Long drives and convoys, in comfort." data-occ="Corporate &amp; VIP"><img draggable="false" src="assets/cars/white-toyota-land-cruiser.webp" alt="White Toyota Land Cruiser" width="951" height="501"></button>
+        <button class="car" role="option" data-id="jhajjz-chrysler-300c-limousine" data-word="Limousine" data-name="Chrysler 300C stretch" data-fact="From the Jhajj'z fleet. For a red-carpet arrival." data-real><img draggable="false" src="assets/cars/jhajjz-chrysler-300c-limousine.webp" alt="White Chrysler 300C stretch limousine from the Jhajj'z fleet" width="1162" height="400"></button>
+        <button class="car" role="option" data-id="jhajjz-vintage-tourer" data-word="Vintage" data-name="Vintage tourer" data-fact="From the Jhajj'z yard. For weddings and photoshoots." data-real><img draggable="false" src="assets/cars/jhajjz-vintage-tourer.webp" alt="White vintage open tourer from the Jhajj'z yard" width="697" height="319"></button>
         <button class="car" role="option" data-id="white-toyota-vellfire" data-word="Vellfire" data-name="Toyota Vellfire" data-fact="A luxury MPV for families and guests." data-occ="Groups"><img draggable="false" src="assets/cars/white-toyota-vellfire.webp" alt="White Toyota Vellfire" width="959" height="483"></button>
         <button class="car" role="option" data-id="black-toyota-innova-crysta" data-word="Crysta" data-name="Toyota Innova Crysta" data-fact="Airline crew, airport transfers and staff commutes." data-occ="Airport &amp; crew"><img draggable="false" src="assets/cars/black-toyota-innova-crysta.webp" alt="Black Toyota Innova Crysta" width="894" height="534"></button>
-        <button class="car" role="option" data-id="grey-force-urbania" data-word="Urbania" data-name="Force Urbania" data-fact="A mini van for the family or the team. Coaches for the rest." data-occ="Groups"><img draggable="false" src="assets/cars/grey-force-urbania.webp" alt="Grey Force Urbania" width="548" height="406"></button>
+        <button class="car" role="option" data-id="grey-force-urbania" data-word="Urbania" data-name="Force Urbania" data-fact="A mini van for the family or the team." data-occ="Groups"><img draggable="false" src="assets/cars/grey-force-urbania.webp" alt="Grey Force Urbania" width="548" height="406"></button>
+        <button class="car" role="option" data-id="jhajjz-mercedes-benz-coach" data-word="Coach" data-name="Luxury coach" data-fact="A Jhajj'z Mercedes-Benz coach. Volvo coaches too, for large groups." data-real><img draggable="false" src="assets/cars/jhajjz-mercedes-benz-coach.webp" alt="Jhajj'z-branded Mercedes-Benz luxury coach" width="772" height="447"></button>
       </div>
     </div>
 
     <div class="wrap plate">
-      <div class="occasions" role="group" aria-label="Show a car for">
-        <button type="button" data-go="silver-rolls-royce-ghost" aria-pressed="true">Weddings</button>
-        <button type="button" data-go="white-bmw-7-series" aria-pressed="false">Corporate &amp; VIP</button>
-        <button type="button" data-go="black-toyota-innova-crysta" aria-pressed="false">Airport &amp; crew</button>
-        <button type="button" data-go="grey-force-urbania" aria-pressed="false">Groups</button>
-      </div>
       <div class="plate-name" aria-live="polite">
         <h2 id="car-name">Rolls-Royce Ghost</h2>
         <p id="car-fact">The wedding car. Flowers and ribbon on request.</p>
       </div>
-      <p class="plate-ask">Drag the line-up to see the fleet.<br>Ask about this car on <a class="wa-link" href="https://wa.me/919803600001" target="_blank" rel="noopener">WhatsApp</a></p>
+      <p class="plate-ask"><span id="car-note">Model picture is illustrative.</span><br>Ask about this car on <a class="wa-link" href="https://wa.me/919803600001" target="_blank" rel="noopener">WhatsApp</a></p>
     </div>
   </section>
 
@@ -480,27 +483,27 @@ p { margin: 0; }
         <p>The couple's car, the guests' cars and the coaches, from one fleet with one team.</p>
       </div>
       <div class="track" id="track">
-        <article class="o-card" style="--panel: var(--tone-4)">
+        <article class="o-card">
           <img src="assets/photos/rolls-royce-flowers.webp" alt="White Rolls-Royce Ghost decorated with flowers" width="1600" height="1067" loading="lazy">
           <div class="o-text"><h3>Weddings</h3><p>The couple's car, family cars and guest transfers. We handle decoration and timings on the day.</p></div>
         </article>
-        <article class="o-card" style="--panel: var(--tone-1)">
+        <article class="o-card">
           <img src="assets/photos/chauffeur-bmw-taj.webp" alt="Jhajj'z chauffeur beside a white BMW 7 Series with Taj branding" width="1200" height="800" loading="lazy">
           <div class="o-text"><h3>VIP desks</h3><p>Delegation convoys and travel desks at 5-star hotels.</p></div>
         </article>
-        <article class="o-card" style="--panel: var(--tone-5)">
+        <article class="o-card">
           <img src="assets/photos/chauffeur-innova.webp" alt="Jhajj'z chauffeur beside a black Toyota Innova Crysta" width="1200" height="800" loading="lazy">
           <div class="o-text"><h3>Crew &amp; staff</h3><p>Airline crew pickups and drops, and daily employee commutes.</p></div>
         </article>
-        <article class="o-card" style="--panel: var(--tone-2)">
+        <article class="o-card">
           <img src="assets/photos/coaches-row.webp" alt="A row of Jhajj'z coaches" width="1600" height="1067" loading="lazy">
           <div class="o-text"><h3>Groups</h3><p>Volvo and Mercedes-Benz coaches for events, conferences and family gatherings.</p></div>
         </article>
-        <article class="o-card" style="--panel: var(--tone-6)">
+        <article class="o-card">
           <img src="assets/photos/limousine-300c.webp" alt="White Chrysler 300C stretch limousine with a red roof" width="1600" height="1067" loading="lazy">
           <div class="o-text"><h3>Arrivals</h3><p>The stretch limousine, vintage cars and convertibles for an entrance and the photographs.</p></div>
         </article>
-        <article class="o-card" style="--panel: var(--tone-3)">
+        <article class="o-card">
           <img src="assets/photos/v-class.webp" alt="White Mercedes-Benz V-Class from the Jhajj'z fleet" width="1600" height="1067" loading="lazy">
           <div class="o-text"><h3>Your own trips</h3><p>By the hour, day or month. City tours and long-term hire.</p></div>
         </article>
@@ -512,18 +515,18 @@ p { margin: 0; }
     <div class="wrap fleet-head rise">
       <h2 id="fleet-title"><span class="w1">The</span><span class="w2">fleet</span></h2>
     </div>
-    <div class="rider" aria-hidden="true"><img src="assets/cars/white-range-rover.webp" alt="" width="1012" height="388"></div>
     <div class="fleet-body">
+      <div class="rider" aria-hidden="true"><img id="rider" src="assets/cars/silver-rolls-royce-ghost.webp" alt="" width="546" height="250"></div>
       <ul class="rows">
-        <li><div class="r-name"><h3>Luxury cars</h3><p>Rolls-Royce, Bentley, Mercedes-Benz, BMW, Jaguar</p></div><p class="r-use">Weddings, VIPs, arrivals</p></li>
-        <li><div class="r-name"><h3>Executive cabs</h3><p>Sedans for meetings and airport runs</p></div><p class="r-use">Corporate travel</p></li>
-        <li><div class="r-name"><h3>SUVs</h3><p>Range Rover, Mercedes-AMG G 63, Land Cruiser and more</p></div><p class="r-use">Convoys and long drives</p></li>
-        <li><div class="r-name"><h3>Luxury MPVs</h3><p>Toyota Vellfire, Mercedes-Benz V-Class</p></div><p class="r-use">Families and guests</p></li>
-        <li><div class="r-name"><h3>Vintage cars</h3><p>Open tourers and classic saloons</p></div><p class="r-use">Weddings and photoshoots</p></li>
-        <li><div class="r-name"><h3>Convertibles</h3><p>Audi A3 Cabriolet</p></div><p class="r-use">Shoots and evening drives</p></li>
-        <li><div class="r-name"><h3>Limousines</h3><p>Chrysler 300C stretch</p></div><p class="r-use">Red-carpet arrivals</p></li>
-        <li><div class="r-name"><h3>Mini vans</h3><p>Force Urbania, Toyota HiAce</p></div><p class="r-use">Small groups and teams</p></li>
-        <li><div class="r-name"><h3>Luxury coaches</h3><p>Volvo and Mercedes-Benz</p></div><p class="r-use">Events and large groups</p></li>
+        <li data-car="silver-rolls-royce-ghost"><div class="r-name"><h3>Luxury cars</h3><p>Rolls-Royce, Bentley, Mercedes-Benz, BMW, Jaguar</p></div><p class="r-use">Weddings, VIPs, arrivals</p></li>
+        <li data-car="white-mercedes-benz-e-class"><div class="r-name"><h3>Executive cabs</h3><p>Sedans for meetings and airport runs</p></div><p class="r-use">Corporate travel</p></li>
+        <li data-car="black-mercedes-amg-g-63"><div class="r-name"><h3>SUVs</h3><p>Range Rover, Mercedes-AMG G 63, Land Cruiser and more</p></div><p class="r-use">Convoys and long drives</p></li>
+        <li data-car="white-toyota-vellfire"><div class="r-name"><h3>Luxury MPVs</h3><p>Toyota Vellfire, Mercedes-Benz V-Class</p></div><p class="r-use">Families and guests</p></li>
+        <li data-car="jhajjz-vintage-tourer"><div class="r-name"><h3>Vintage cars</h3><p>Open tourers and classic saloons</p></div><p class="r-use">Weddings and photoshoots</p></li>
+        <li data-car="red-audi-a3-cabriolet"><div class="r-name"><h3>Convertibles</h3><p>Audi A3 Cabriolet</p></div><p class="r-use">Shoots and evening drives</p></li>
+        <li data-car="jhajjz-chrysler-300c-limousine"><div class="r-name"><h3>Limousines</h3><p>Chrysler 300C stretch</p></div><p class="r-use">Red-carpet arrivals</p></li>
+        <li data-car="grey-force-urbania"><div class="r-name"><h3>Mini vans</h3><p>Force Urbania, Toyota HiAce</p></div><p class="r-use">Small groups and teams</p></li>
+        <li data-car="jhajjz-mercedes-benz-coach"><div class="r-name"><h3>Luxury coaches</h3><p>Volvo and Mercedes-Benz</p></div><p class="r-use">Events and large groups</p></li>
       </ul>
     </div>
     <div class="wrap fleet-foot">
@@ -571,7 +574,7 @@ p { margin: 0; }
         </ul>
         <p class="col-sum">Hourly, daily or monthly hire, always with a chauffeur.</p>
       </div>
-      <p class="say rise" style="--d:240ms" id="say" aria-live="polite"><span class="k">Where we drive</span>Chandigarh, New Delhi, Gurgaon, Jaipur, Udaipur, Mumbai, Chennai, Kolkata, Bhubaneswar, Dehradun, Mussoorie, Rishikesh, Haridwar and Ropar.</p>
+      <p class="say rise" style="--d:240ms" id="say" aria-live="polite"><span class="k">Always included</span>A Jhajj'z chauffeur with every car, whether it is one saloon for an evening or a convoy for a wedding.</p>
     </div>
   </section>
 
@@ -681,6 +684,7 @@ p { margin: 0; }
     if (current) current.setAttribute('aria-selected', 'false');
     current = car;
     car.setAttribute('aria-selected', 'true');
+    document.getElementById('car-note').textContent = car.hasAttribute('data-real') ? 'Photographed at the Jhajj\'z yard.' : 'Model picture is illustrative.';
     const name = car.dataset.name, fact = car.dataset.fact;
     const word = car.dataset.word || name;
     if (reduce) { nameEl.textContent = name; factEl.textContent = fact; marque.textContent = word; }
@@ -762,7 +766,8 @@ p { margin: 0; }
   }
 
   /* ---- Fleet: the car rides down the list ---- */
-  const rider = document.querySelector('.rider img');
+  const rider = document.getElementById('rider');
+  let riderCar = 'silver-rolls-royce-ghost';
   const rows = [...document.querySelectorAll('.rows li')];
   function riderScroll() {
     if (innerWidth <= 640) return;
@@ -770,7 +775,13 @@ p { margin: 0; }
     const y = rr.top + rr.height / 2;
     rows.forEach(li => {
       const b = li.getBoundingClientRect();
-      li.classList.toggle('is-here', y >= b.top && y < b.bottom);
+      const here = y >= b.top && y < b.bottom;
+      li.classList.toggle('is-here', here);
+      if (here && li.dataset.car !== riderCar) {
+        riderCar = li.dataset.car;
+        rider.classList.add('swap');
+        setTimeout(() => { rider.src = `assets/cars/${riderCar}.webp`; rider.classList.remove('swap'); }, 200);
+      }
     });
   }
 
